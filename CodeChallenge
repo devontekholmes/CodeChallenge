@@ -1,0 +1,56 @@
+# CodeChallenge
+Code Challenge from 11AM-12 PM
+
+
+
+create database Workforce;
+use Workforce;
+
+--Employee
+-- ID(PRIMARY KEY), FIRSTNAME, LASTNAME, SALARY, STREETADDRESS, CITY, STATE, ZIPCODE, DEPARTMENTID(FOREIGN KEY)
+CREATE TABLE [Employee]([EmployeeId] int NOT NULL IDENTITY(1, 1), [FName] varchar(30), [LName] varchar(30), 
+			 [Salary] bigint, [StrAddress] varchar(30), [City] varchar(30), [State] varchar(30),
+			 [ZipCode] varchar(30), [DepId] int CONSTRAINT [pk_Employee_EpmployeeId] PRIMARY KEY CLUSTERED(EmployeeId));
+
+ALTER TABLE [Employee] ADD CONSTRAINT [fk_Employee_DepId] FOREIGN KEY ([DepId])
+			REFERENCES [Department]([DepId]) ON UPDATE CASCADE;
+--Department 
+-- ID(PRIMARY KEY), NAME
+CREATE TABLE [Department]([DepId] int NOT NULL IDENTITY(1, 1), [DepName] varchar(30) 
+			 CONSTRAINT [pk_Department_DepId] PRIMARY KEY CLUSTERED(DepId));
+
+-- INSERT >= 3 ENTRIES INTO EACH TABLE
+INSERT INTO [Department]([DepName])
+			VALUES('Research & Development');
+INSERT INTO [Department]([DepName])
+			VALUES('Human Resources');
+INSERT INTO [Department]([DepName])
+			VALUES('Lead Development');
+INSERT INTO [Department]([DepName])
+			VALUES('Quality Assurance');
+
+INSERT INTO [Employee]([FName], [LName], [Salary], [StrAddress], [City], [State], [ZipCode], [DepId])
+			VALUES ('Jason', 'Godson', 50000, '223 Young Street', 'Jackson', 'Missisippi', '28479', 1);
+
+INSERT INTO [Employee]([FName], [LName], [Salary], [StrAddress], [City], [State], [ZipCode], [DepId])
+			VALUES ('Charles',  'Monroe', 45000, '99 100th Street', 'Jacobs County', 'Missisippi', '28727', 4);
+
+INSERT INTO [Employee]([FName], [LName], [Salary], [StrAddress], [City], [State], [ZipCode], [DepId])
+			VALUES ('Dave',  'Eaton', 78000, '17 Staton Island', 'New York City', 'New York', '98842', 3);
+
+INSERT INTO [Employee]([FName], [LName], [Salary], [StrAddress], [City], [State], [ZipCode], [DepId])
+			VALUES ('Titus',  'Archemedies', 47000, '7421 Ox Drive','Alexandria', 'Virginia', '87387', 2);
+			 
+
+--WRITE SELECT QUERY TO RETURN ALL EMPLOYEES IN ONE OF YOUR DEPARTMENTS
+SELECT * FROM Employee WHERE DepId = 2;
+
+--WRITE SELECT QUERY TO DISPLAY THE SUM OF THE SALARIES OF ALL EMPLOYEES IN EACH DEPARTMENT
+SELECT DepName, SUM(Salary) AS TotalSalary FROM Department, Employee GROUP BY DepName;
+
+-- WRITE UPDATE COMMAND TO CHANGE AN EMPOLYEE'S SALARY
+UPDATE [Employee]
+SET [Salary] = 50000
+WHERE ([Salary] < 49999);
+-- ADD A DATE HIRED COLUMN TO EMPLOYEES TABLE
+
